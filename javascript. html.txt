@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Assessment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #00796b; /* Changed to a teal color */
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 0;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        .section h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .task1 {
+            background-color: #e8f5e9; /* Light green */
+        }
+        .task2 {
+            background-color: #e3f2fd; /* Light blue */
+        }
+        .task3 {
+            background-color: #fce4ec; /* Light pink */
+        }
+        .output {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 0;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        input[type="number"],
+        input[type="text"] {
+            width: calc(50% - 22px);
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #00796b; /* Changed to match header */
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JavaScript</h1>
+    </header>
+    <div class="container">
+        <!-- Task 1: Simple Calculator -->
+        <div class="section task1">
+            <h2>Task 1: Simple Calculator</h2>
+            <input type="number" id="num1" placeholder="Enter first number">
+            <input type="number" id="num2" placeholder="Enter second number">
+            <select id="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <button class="button" onclick="calculate()">Calculate</button>
+            <div id="calcResult" class="output"></div>
+        </div>
+
+        <!-- Task 2: Array Operations -->
+        <div class="section task2">
+            <h2>Task 2: Array Operations</h2>
+            <input type="text" id="arrayInput" placeholder="Enter numbers separated by commas">
+            <button class="button" onclick="sumEvenNumbers()">Calculate Sum of Even Numbers</button>
+            <div id="arrayResult" class="output"></div>
+        </div>
+
+        <!-- Task 3: Object Manipulation -->
+        <div class="section task3">
+            <h2>Task 3: Object Manipulation</h2>
+            <input type="text" id="firstName" placeholder="Enter first name">
+            <input type="text" id="lastName" placeholder="Enter last name">
+            <input type="number" id="age" placeholder="Enter age">
+            <button class="button" onclick="createPerson()">Create Person</button>
+            <button class="button" onclick="incrementAge()">Increment Age</button>
+            <div id="personResult" class="output"></div>
+        </div>
+    </div>
+   
+    <script>
+        // Task 1: Simple Calculator
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value;
+            let result;
+
+            if (isNaN(num1) || isNaN(num2)) {
+                result = 'Please enter valid numbers.';
+            } else {
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        if (num2 === 0) {
+                            result = 'Error: Division by zero';
+                        } else {
+                            result = num1 / num2;
+                        }
+                        break;
+                    default:
+                        result = 'Invalid operator';
+                }
+            }
+
+            document.getElementById('calcResult').innerText = `Result: ${result}`;
+        }
+
+        // Task 2: Array Operations
+        function sumEvenNumbers() {
+            const input = document.getElementById('arrayInput').value;
+            const numbers = input.split(',').map(num => parseFloat(num.trim()));
+            const sum = numbers.filter(num => !isNaN(num) && num % 2 === 0).reduce((acc, num) => acc + num, 0);
+
+            document.getElementById('arrayResult').innerText = `Sum of even numbers: ${sum}`;
+        }
+
+        // Task 3: Object Manipulation
+        let person = null;
+
+        function createPerson() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const age = parseInt(document.getElementById('age').value);
+
+            if (firstName && lastName && !isNaN(age) && age >= 0) {
+                person = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    age: age,
+                    getFullName: function() {
+                        return `${this.firstName} ${this.lastName}`;
+                    },
+                    incrementAge: function() {
+                        this.age += 1;
+                    }
+                };
+
+                document.getElementById('personResult').innerHTML = `
+                    <strong>Full Name:</strong> ${person.getFullName()}<br>
+                    <strong>Age:</strong> ${person.age}
+                `;
+            } else {
+                document.getElementById('personResult').innerText = 'Please provide valid input for all fields.';
+            }
+        }
+
+        function incrementAge() {
+            if (person) {
+                person.incrementAge();
+                document.getElementById('personResult').innerHTML = `
+                    <strong>Full Name:</strong> ${person.getFullName()}<br>
+                    <strong>Age:</strong> ${person.age}
+                `;
+            } else {
+                document.getElementById('personResult').innerText = 'Please create a person first.';
+            }
+        }
+    </script>
+</body>
+</html>
